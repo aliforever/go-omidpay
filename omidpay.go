@@ -225,7 +225,7 @@ func (c *Client) HttpCallback(
 			}
 
 			if transactionAmount := r.FormValue("transactionAmount"); transactionAmount != "" {
-				amount, err := strconv.ParseInt(transactionAmount, 0, 10)
+				amount, err := strconv.ParseInt(transactionAmount, 10, 64)
 				if err != nil {
 					onError(err, r, w)
 
