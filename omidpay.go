@@ -189,13 +189,17 @@ func (c *Client) HttpCallback(
 			return
 		}
 
+		fmt.Println(r.Form)
+
 		mid := r.Form.Get("MID")
 		state := r.Form.Get("State")
 		ResNum := r.Form.Get("ResNum")
 		language := r.Form.Get("language")
 		token := r.Form.Get("token")
 
-		if mid == "" || state == "" || ResNum == "" || language == "" || token == "" {
+		if mid == "" || state == "" || ResNum == "" || token == "" {
+			fmt.Println(mid, state, ResNum, language, token)
+
 			onError(MissingParams, r, w)
 
 			return
