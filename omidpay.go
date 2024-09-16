@@ -183,11 +183,17 @@ func (c *Client) HttpCallback(
 	onError func(err error, r *http.Request, w http.ResponseWriter),
 ) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		mid := r.FormValue("MID")
-		state := r.FormValue("State")
-		ResNum := r.FormValue("ResNum")
-		language := r.FormValue("language")
-		token := r.FormValue("token")
+		err := r.ParseForm()
+		if err != nil {
+			http.Error(w, "Unable to parse form", http.StatusBadRequest)
+			return
+		}
+
+		mid := r.Form.Get("MID")
+		state := r.Form.Get("State")
+		ResNum := r.Form.Get("ResNum")
+		language := r.Form.Get("language")
+		token := r.Form.Get("token")
 
 		if mid == "" || state == "" || ResNum == "" || language == "" || token == "" {
 			onError(MissingParams, r, w)
@@ -204,27 +210,27 @@ func (c *Client) HttpCallback(
 		}
 
 		if state == "OK" {
-			if traceNo := r.FormValue("TraceNo"); traceNo != "" {
+			if traceNo := r.Form.Get("TraceNo"); traceNo != "" {
 				cback.TraceNo = &traceNo
 			}
 
-			if customerRefNum := r.FormValue("CustomerRefNum"); customerRefNum != "" {
+			if customerRefNum := r.Form.Get("CustomerRefNum"); customerRefNum != "" {
 				cback.CustomerRefNum = &customerRefNum
 			}
 
-			if redirectUrl := r.FormValue("redirectUrl"); redirectUrl != "" {
+			if redirectUrl := r.Form.Get("redirectUrl"); redirectUrl != "" {
 				cback.RedirectUrl = &redirectUrl
 			}
 
-			if cardHashPan := r.FormValue("CardHashPan"); cardHashPan != "" {
+			if cardHashPan := r.Form.Get("CardHashPan"); cardHashPan != "" {
 				cback.CardHashPan = &cardHashPan
 			}
 
-			if cardMaskPan := r.FormValue("CardMaskPan"); cardMaskPan != "" {
+			if cardMaskPan := r.Form.Get("CardMaskPan"); cardMaskPan != "" {
 				cback.CardMaskPan = &cardMaskPan
 			}
 
-			if transactionAmount := r.FormValue("transactionAmount"); transactionAmount != "" {
+			if transactionAmount := r.Form.Get("transactionAmount"); transactionAmount != "" {
 				amount, err := strconv.ParseInt(transactionAmount, 10, 64)
 				if err != nil {
 					onError(err, r, w)
@@ -235,11 +241,11 @@ func (c *Client) HttpCallback(
 				cback.TransactionAmount = &amount
 			}
 
-			if userId := r.FormValue("userId"); userId != "" {
+			if userId := r.Form.Get("userId"); userId != "" {
 				cback.UserID = &userId
 			}
 
-			if refNum := r.FormValue("RefNum"); refNum != "" {
+			if refNum := r.Form.Get("RefNum"); refNum != "" {
 				cback.RefNum = &refNum
 			} else {
 				onError(MissingRefNum, r, w)
@@ -247,11 +253,11 @@ func (c *Client) HttpCallback(
 				return
 			}
 
-			if emailAddress := r.FormValue("emailAddress"); emailAddress != "" {
+			if emailAddress := r.Form.Get("emailAddress"); emailAddress != "" {
 				cback.EmailAddress = &emailAddress
 			}
 
-			if mobileNo := r.FormValue("mobileNo"); mobileNo != "" {
+			if mobileNo := r.Form.Get("mobileNo"); mobileNo != "" {
 				cback.MobileNo = &mobileNo
 			}
 
