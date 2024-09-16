@@ -61,6 +61,7 @@ var statusCodes = map[string]string{
 	"erScm_erOrgTransNotExists":    "تراکنش مورد نظر یافت نشد.",
 	"erScm_InvalidReferenceNum":    "شماره ارجاءه معتبر نمی باشد.",
 	"erScm_OrgTransReversedBefore": "تراکنش برگشت خورده است",
+	"erScm_OrgTransVerifiedBefore": "تراکنش قبلا تایید شده است",
 }
 
 var (
