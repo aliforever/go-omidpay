@@ -58,8 +58,9 @@ var statusCodes = map[string]string{
 	"erMts_AASError":                           "کد کاربری و رمز الزامی هست.",
 	"erMts_SCMError":                           "خطای سرور مدیریت کانال",
 
-	"erScm_erOrgTransNotExists": "تراکنش مورد نظر یافت نشد.",
-	"erScm_InvalidReferenceNum": "شماره ارجاءه معتبر نمی باشد.",
+	"erScm_erOrgTransNotExists":    "تراکنش مورد نظر یافت نشد.",
+	"erScm_InvalidReferenceNum":    "شماره ارجاءه معتبر نمی باشد.",
+	"erScm_OrgTransReversedBefore": "تراکنش برگشت خورده است",
 }
 
 var (
